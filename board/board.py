@@ -29,4 +29,12 @@ class Board(object):
         self.edges = []
 
     def get_tile(self, x, y):
-        return self.tiles['{}-{}'.format(x, y)]
+        return self.tiles[Board._pos_to_key(x, y)]
+
+    @staticmethod
+    def _pos_to_key(x, y):
+        return '{}-{}'.format(x, y)
+
+    def generate_tile_row(self, num_hex, y):
+        for x in range(num_hex):
+            self.tiles[Board._pos_to_key(x, y)] = Tile()
