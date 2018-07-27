@@ -1,5 +1,5 @@
 from math import pi, cos, sin
-from utils import Point
+from depreciated.utils import Point
 
 
 class GameTile:

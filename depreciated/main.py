@@ -1,8 +1,7 @@
 from tkinter import *
-from utils import Point
-from math import pi, cos, sin, sqrt
-from collections import namedtuple
-from gametile import GameTile
+from depreciated.utils import Point
+from math import sqrt
+from depreciated.gametile import GameTile
 
 canvas_height = 300
 canvas_width = 300

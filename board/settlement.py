@@ -1,4 +1,4 @@
 class Settlement:
     def __init__(self):
-        self.tiles = []
+        self.vert = None
         self.level = 1
