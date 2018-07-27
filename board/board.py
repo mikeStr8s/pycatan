@@ -5,8 +5,8 @@ class Edge(object):
     verts = set()
 
     def __init__(self, vert1, vert2):
-        assert isinstance(vert1, Vert)
-        assert isinstance(vert2, Vert)
+        assert isinstance(vert1, Vertex)
+        assert isinstance(vert2, Vertex)
         self.verts = {vert1, vert2}
 
     def __eq__(self, other):
@@ -21,7 +21,7 @@ class Edge(object):
             return False
 
 
-class Vert(object):
+class Vertex(object):
     tiles = set()
 
     def __init__(self, tile1, tile2, tile3):
@@ -31,11 +31,11 @@ class Vert(object):
         self.tiles = {tile1, tile2, tile3}
 
     def __eq__(self, other):
-        assert isinstance(other, Vert)
+        assert isinstance(other, Vertex)
         return self.tiles == other.tiles
 
     def is_adjacent(self, other):
-        assert isinstance(other, Vert)
+        assert isinstance(other, Vertex)
         if len(self.tiles & other.tiles) == 2:
             return True
         else:
