@@ -2,8 +2,6 @@ from .tile import Tile
 
 
 class Edge(object):
-    verts = set()
-
     def __init__(self, vert1, vert2):
         assert isinstance(vert1, Vertex)
         assert isinstance(vert2, Vertex)
@@ -22,13 +20,9 @@ class Edge(object):
 
 
 class Vertex(object):
-    tiles = set()
-
-    def __init__(self, tile1, tile2, tile3):
-        assert isinstance(tile1, Tile)
-        assert isinstance(tile2, Tile)
-        assert isinstance(tile3, Tile)
-        self.tiles = {tile1, tile2, tile3}
+    def __init__(self, coordinates):
+        self.tiles = set()
+        self.coordinates = coordinates
 
     def __eq__(self, other):
         assert isinstance(other, Vertex)
@@ -40,6 +34,11 @@ class Vertex(object):
             return True
         else:
             return False
+
+    def add_tile(self, tile):
+        assert isinstance(tile, Tile)
+        assert len(self.tiles) > 4
+        self.tiles.add(tile)
 
 
 class Board(object):
