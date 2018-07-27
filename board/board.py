@@ -1,23 +1,32 @@
 from .tile import Tile
 
 
+class Vertex(object):
+    def __init__(self, coordinates):
+        self._tiles = set()
+        self.has_settlement = False
+        self._neighbors = set()
+        self.coordinates = coordinates
+        self.id = None
+
+    def add_neighbor(self, vert):
+        assert len(self._neighbors) < 4
+        assert isinstance(vert, Vertex)
+        self._neighbors.add(vert)
+
+    def add_tile(self, tile):
+        assert len(self._tiles) < 4
+        assert isinstance(tile, Tile)
+        self._tiles.add(tile)
+
+
 class Edge(object):
-    tiles = set()
+    verts = set()
 
-    def __init__(self, tile1, tile2):
-        assert isinstance(tile1, Tile)
-        assert isinstance(tile2, Tile)
-        self.tiles = {tile1, tile2}
-
-
-class Vert(object):
-    tiles = set()
-
-    def __init__(self, tile1, tile2, tile3):
-        assert isinstance(tile1, Tile)
-        assert isinstance(tile2, Tile)
-        assert isinstance(tile3, Tile)
-        self.tiles = {tile1, tile2, tile3}
+    def __init__(self, vert1, vert2):
+        assert isinstance(vert1, Vertex)
+        assert isinstance(vert2, Vertex)
+        self.verts = {vert1, vert2}
 
 
 class Board(object):
