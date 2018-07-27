@@ -2,12 +2,23 @@ from .tile import Tile
 
 
 class Edge(object):
-    tiles = set()
+    verts = set()
 
-    def __init__(self, tile1, tile2):
-        assert isinstance(tile1, Tile)
-        assert isinstance(tile2, Tile)
-        self.tiles = {tile1, tile2}
+    def __init__(self, vert1, vert2):
+        assert isinstance(vert1, Vert)
+        assert isinstance(vert2, Vert)
+        self.verts = {vert1, vert2}
+
+    def __eq__(self, other):
+        assert isinstance(other, Edge)
+        return self.verts == other.verts
+
+    def is_adjacent(self, other):
+        assert isinstance(other, Edge)
+        if len(self.verts & other.verts) == 1:
+            return True
+        else:
+            return False
 
 
 class Vert(object):
@@ -18,6 +29,17 @@ class Vert(object):
         assert isinstance(tile2, Tile)
         assert isinstance(tile3, Tile)
         self.tiles = {tile1, tile2, tile3}
+
+    def __eq__(self, other):
+        assert isinstance(other, Vert)
+        return self.tiles == other.tiles
+
+    def is_adjacent(self, other):
+        assert isinstance(other, Vert)
+        if len(self.tiles & other.tiles) == 2:
+            return True
+        else:
+            return False
 
 
 class Board(object):
