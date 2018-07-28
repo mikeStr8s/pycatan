@@ -22,7 +22,7 @@ class Edge(object):
 
 class Vertex(object):
     def __init__(self, coordinates):
-        self.tiles = set()
+        self.tiles = []
         self.coordinates = coordinates
 
     def __eq__(self, other):
@@ -38,8 +38,8 @@ class Vertex(object):
 
     def add_tile(self, tile):
         assert isinstance(tile, Tile)
-        assert len(self.tiles) > 4
-        self.tiles.add(tile)
+        assert len(self.tiles) < 4, len(self.tiles)
+        self.tiles.append(tile)
 
 
 class Board(object):
@@ -92,14 +92,17 @@ class Board(object):
                         for v in self.vertices:
                             if v.coordinates == vertex_coordinates:
                                 tile.vertices.append(v)  # Add existing vertex to the tile object
+                                v.add_tile(tile)
                                 break
                     else:  # If the new vertex does not exist in self.vertices
                         # Add the new vertex to the tile object and self.vertices
                         tile.vertices.append(vertex)
                         self.vertices.append(vertex)
+                        vertex.add_tile(tile)
                 else:  # If self.vertices is empty
                     # Add new vertex to the tile object and self.vertices
                     tile.vertices.append(vertex)
                     self.vertices.append(vertex)
+                    vertex.add_tile(tile)
 
             self.tiles[Board._pos_to_key(x, y)] = tile  # Add tile to the tiles coordinate structure
