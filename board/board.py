@@ -23,18 +23,25 @@ class Edge(object):
 class Vertex(object):
     def __init__(self, coordinates):
         self.tiles = []
+        assert isinstance(coordinates, list)
         self.coordinates = coordinates
 
     def __eq__(self, other):
         assert isinstance(other, Vertex)
         return self.tiles == other.tiles
 
+    def __str__(self):
+        return str(self.coordinates)
+
+    def __hash__(self):
+        return hash(str(self))
+
     def is_adjacent(self, other):
         assert isinstance(other, Vertex)
-        if len(self.tiles & other.tiles) == 2:
-            return True
-        else:
-            return False
+        for idx, tile in enumerate(self.tiles):
+            if not tile & other.tiles[idx]:
+                return False
+        return True
 
     def add_tile(self, tile):
         assert isinstance(tile, Tile)
@@ -62,6 +69,13 @@ class Board(object):
     @staticmethod
     def _pos_to_key(x, y):
         return '{}-{}'.format(x, y)
+
+    def _find_edges(self, tile):
+        for v in range(6):
+            if v is 5:
+                self.edges.append(Edge(tile.vertices[v], tile.vertices[0]))
+            else:
+                self.edges.append(Edge(tile.vertices[v], tile.vertices[v+1]))
 
     def generate_tile_row(self, num_tiles, y):
         offset = 0  # Default offset of zero
@@ -104,5 +118,7 @@ class Board(object):
                     tile.vertices.append(vertex)
                     self.vertices.append(vertex)
                     vertex.add_tile(tile)
-
-            self.tiles[Board._pos_to_key(x, y)] = tile  # Add tile to the tiles coordinate structure
+            tile_id = Board._pos_to_key(x, y)
+            tile.tile_id = tile_id
+            self.tiles[tile_id] = tile  # Add tile to the tiles coordinate structure
+            self._find_edges(tile)
