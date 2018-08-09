@@ -1,54 +1,8 @@
 from .tile import Tile
 from .settlement import Settlement
+from .vertex import Vertex
+from .edge import Edge
 from math import pi, cos, sin, sqrt
-
-
-class Edge(object):
-    def __init__(self, vert1, vert2):
-        assert isinstance(vert1, Vertex)
-        assert isinstance(vert2, Vertex)
-        self.verts = {vert1, vert2}
-
-    def __eq__(self, other):
-        assert isinstance(other, Edge)
-        return self.verts == other.verts
-
-    def is_adjacent(self, other):
-        assert isinstance(other, Edge)
-        if len(self.verts & other.verts) == 1:
-            return True
-        else:
-            return False
-
-
-class Vertex(object):
-    def __init__(self, coordinates):
-        self.tiles = []
-        assert isinstance(coordinates, list)
-        self.coordinates = coordinates
-        self.settlement = None
-
-    def __eq__(self, other):
-        assert isinstance(other, Vertex)
-        return self.tiles == other.tiles
-
-    def __str__(self):
-        return str(self.coordinates)
-
-    def __hash__(self):
-        return hash(str(self))
-
-    def is_adjacent(self, other):
-        assert isinstance(other, Vertex)
-        for idx, tile in enumerate(self.tiles):
-            if not tile & other.tiles[idx]:
-                return False
-        return True
-
-    def add_tile(self, tile):
-        assert isinstance(tile, Tile)
-        assert len(self.tiles) < 4, len(self.tiles)
-        self.tiles.append(tile)
 
 
 class Board(object):

@@ -1,4 +1,4 @@
-from board.board import Vertex
+from .vertex import Vertex
 from .player import Player
 
 
