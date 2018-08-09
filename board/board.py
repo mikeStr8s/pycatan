@@ -1,4 +1,5 @@
 from .tile import Tile
+from .settlement import Settlement
 from math import pi, cos, sin, sqrt
 
 
@@ -25,6 +26,7 @@ class Vertex(object):
         self.tiles = []
         assert isinstance(coordinates, list)
         self.coordinates = coordinates
+        self.settlement = None
 
     def __eq__(self, other):
         assert isinstance(other, Vertex)
@@ -70,12 +72,26 @@ class Board(object):
     def _pos_to_key(x, y):
         return '{}-{}'.format(x, y)
 
+    def add_settlement(self, vertex, player):
+        self.settlements.append(Settlement(vertex, player))
+
     def _find_edges(self, tile):
         for v in range(6):
+            copied = False
             if v is 5:
-                self.edges.append(Edge(tile.vertices[v], tile.vertices[0]))
+                new_edge = Edge(tile.vertices[v], tile.vertices[0])
+                for e in self.edges:
+                    if e.verts == new_edge.verts:
+                        copied = True
+                if not copied:
+                    self.edges.append(new_edge)
             else:
-                self.edges.append(Edge(tile.vertices[v], tile.vertices[v+1]))
+                new_edge = Edge(tile.vertices[v], tile.vertices[v+1])
+                for e in self.edges:
+                    if e.verts == new_edge.verts:
+                        copied = True
+                if not copied:
+                    self.edges.append(new_edge)
 
     def generate_tile_row(self, num_tiles, y):
         offset = 0  # Default offset of zero
