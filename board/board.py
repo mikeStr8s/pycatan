@@ -19,6 +19,13 @@ class Board(object):
         self.horiz_spacing = self.tile_width
         self.vert_spacing = self.tile_height * (3/4)
 
+        # Generate board tiles
+        self.generate_tile_row(3, 0)
+        self.generate_tile_row(4, 1)
+        self.generate_tile_row(5, 2)
+        self.generate_tile_row(4, 3)
+        self.generate_tile_row(3, 4)
+
     def get_tile(self, x, y):
         return self.tiles[Board._pos_to_key(x, y)]
 
