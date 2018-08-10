@@ -1,10 +1,25 @@
 from board.board import Board
+from random import SystemRandom, randint
+
+game_board = None
 
 
-def main():
+def game():
+    setup()
+    print(game_board)
+
+
+def setup():
+    global game_board
+    game_board = generate_board()
+    resources = ['wood', 'sheep', 'wheat', 'brick', 'stone', 'brick', 'sheep', 'desert', 'wood', 'wheat', 'wood',
+                 'wheat', 'brick', 'sheep', 'sheep', 'stone', 'stone', 'wheat', 'wood']
+    tile_values = [11, 12, 9, 4, 6, 5, 10, 7, 3, 11, 4, 8, 8, 10, 9, 3, 5, 2, 6]
+
+
+def generate_board():
     b = Board()
-    print('Done')
 
 
 if __name__ == '__main__':
-    main()
+    game()

@@ -11,3 +11,7 @@ class Tile:
             return True
         else:
             return False
+
+    def set_val(self, value):
+        assert isinstance(value, int)
+        self.value = value
