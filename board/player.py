@@ -11,3 +11,6 @@ class Player(object):
             'sheep': 0
         }
         self.dev_cards = []
+        self.settlement_count = 5
+        self.city_count = 4
+        self.road_count = 15

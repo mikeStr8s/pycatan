@@ -2,7 +2,12 @@ from .tile import Tile
 from .settlement import Settlement
 from .vertex import Vertex
 from .edge import Edge
+from .player import Player
 from math import pi, cos, sin, sqrt
+
+
+class PlacementException(Exception):
+    pass
 
 
 class Board(object):
@@ -12,6 +17,8 @@ class Board(object):
         self.roads = []
         self.vertices = []
         self.edges = []
+        self.players = {}
+
         self.side_length = 300
         self.size = 30
         self.tile_width = sqrt(3) * self.size
@@ -28,6 +35,19 @@ class Board(object):
 
     def get_tile(self, x, y):
         return self.tiles[Board._pos_to_key(x, y)]
+
+    def create_players(self, count):
+        colors = ['red', 'green', 'blue', 'white']
+        for x in range(count):
+            self.players[x] = Player('Player-{}'.format(x), colors[x])
+
+    def place_settlement(self, vertex, player):
+        assert isinstance(vertex, Vertex)
+        assert isinstance(player, Player)
+        for s in self.settlements:
+            if vertex.is_adjacent(s):
+                raise PlacementException('Selected vertex is adjacent to another settlement')
+        self.settlements.append(Settlement(vertex, player))
 
     @staticmethod
     def _pos_to_key(x, y):
