@@ -1,10 +1,10 @@
-from board.board import Vertex
+from board import board
 from .player import Player
 
 
 class Settlement:
     def __init__(self, vertex, player):
-        assert isinstance(vertex, Vertex)
+        assert isinstance(vertex, board.Vertex)
         self.vertex = vertex
         assert isinstance(player, Player)
         self.player = player
