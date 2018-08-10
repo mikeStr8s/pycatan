@@ -1,14 +1,11 @@
 from board.board import Board
+from random import SystemRandom, randint
 
 game_board = None
-resource_distribution = None
-value_distribution = None
 
 
 def setup():
     global game_board
-    global resource_distribution
-    global value_distribution
     game_board = generate_board()
     resource_distribution = {
         'wheat': 4,
@@ -30,6 +27,20 @@ def setup():
         11: 2,
         12: 1
     }
+    tile_values = generate_tile_values(value_distribution)
+
+
+def generate_tile_values(dist):
+    working = 0
+    tile_dist = []
+    while working < 19:
+        rand_value = SystemRandom().randint(2, 12)
+        if dist[rand_value] != 0:
+            tile_dist.append(rand_value)
+            dist[rand_value] -= 1
+            working += 1
+
+    return tile_dist
 
 
 def game():
