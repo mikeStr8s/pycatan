@@ -4,3 +4,4 @@ venv
 board/__pycache__
 __pycache__
 *.py___jb_old___
+.pytest_cache

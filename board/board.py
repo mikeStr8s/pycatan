@@ -45,16 +45,13 @@ class Board(object):
         assert isinstance(vertex, Vertex)
         assert isinstance(player, Player)
         for s in self.settlements:
-            if vertex.is_adjacent(s):
+            if vertex.is_adjacent(s.vertex):
                 raise PlacementException('Selected vertex is adjacent to another settlement')
         self.settlements.append(Settlement(vertex, player))
 
     @staticmethod
     def _pos_to_key(x, y):
         return '{}-{}'.format(x, y)
-
-    def add_settlement(self, vertex, player):
-        self.settlements.append(Settlement(vertex, player))
 
     def _find_edges(self, tile):
         for v in range(6):

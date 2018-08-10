@@ -20,10 +20,13 @@ class Vertex(object):
 
     def is_adjacent(self, other):
         assert isinstance(other, Vertex)
+        count = 0
         for idx, tile in enumerate(self.tiles):
-            if not tile & other.tiles[idx]:
-                return False
-        return True
+            if count > 1:
+                return True
+            if tile in other.tiles:
+                count += 1
+        return False
 
     def add_tile(self, tile):
         assert isinstance(tile, Tile)
