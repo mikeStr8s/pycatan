@@ -19,7 +19,7 @@ class Board(object):
         self.edges = []
         self.players = {}
 
-        self.side_length = 300
+        self.side_length = 500
         self.size = 30
         self.tile_width = sqrt(3) * self.size
         self.tile_height = 2 * self.size
@@ -72,16 +72,16 @@ class Board(object):
                     self.edges.append(new_edge)
 
     def generate_tile_row(self, num_tiles, y):
-        offset = 0  # Default offset of zero
-        if y == 1 or y == 3:  # If the row on the game board requires only a single offset
-            offset = 0 - (self.tile_width / 2)
+        x_offset = (self.side_length / 2) - self.horiz_spacing  # Default x_offset of zero
+        if y == 1 or y == 3:  # If the row on the game board requires only a single x_offset
+            x_offset = x_offset - (self.tile_width / 2)
         elif y == 2:  # If the row on the game board requires two offsets
-            offset = 0 - self.tile_width
+            x_offset = x_offset - self.tile_width
 
-        height = self.vert_spacing * y  # Full vertex vertical spacing
+        y_offset = ((self.side_length / 2) - 2 * self.vert_spacing) + (self.vert_spacing * y)  # Full vertex vertical spacing
 
         # All tile center-points for current row
-        tile_centers = [[tile * self.horiz_spacing + offset, height] for tile in range(num_tiles)]
+        tile_centers = [[tile * self.horiz_spacing + x_offset, y_offset] for tile in range(num_tiles)]
 
         for x, center in enumerate(tile_centers):
             tile = Tile()

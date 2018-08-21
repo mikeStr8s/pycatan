@@ -1,20 +1,15 @@
 from board.board import Board
 from random import shuffle
-
-game_board = None
-random_start = False  # Default easy setup for the game
-num_players = 3  # Default minimum number of players for a game
+from tkinter import *
 
 
 def game():
     setup()
-    print(game_board)
 
 
 def setup():
-    global game_board
-    global num_players
-    global random_start
+    random_start = False  # Default easy setup for the game
+    num_players = 3  # Default minimum number of players for a game
     game_board = Board()
 
     # Default configuration of resources and dice roll values for easy mode
@@ -36,6 +31,16 @@ def setup():
 
     # Create specified number of players
     game_board.create_players(num_players)
+
+    master = Tk()
+    canvas = Canvas(master, width=game_board.side_length, height=game_board.side_length)
+    canvas.pack()
+    for tile in game_board.tiles:
+        coords = tile.split('-')
+        t = game_board.get_tile(coords[0], coords[1])
+        canvas.create_polygon(*t.vertices_to_list(), fill='black', outline='white')
+
+    mainloop()
 
 
 if __name__ == '__main__':

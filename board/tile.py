@@ -15,3 +15,10 @@ class Tile:
     def set_val(self, value):
         assert isinstance(value, int)
         self.value = value
+
+    def vertices_to_list(self):
+        v_list = []
+        for v in self.vertices:
+            v_list.append(v.coordinates[0])
+            v_list.append(v.coordinates[1])
+        return v_list
