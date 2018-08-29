@@ -1,5 +1,5 @@
 from board.board import Board
-from random import shuffle
+from random import shuffle, SystemRandom
 from tkinter import *
 
 
@@ -38,9 +38,41 @@ def setup():
     for tile in game_board.tiles:
         coords = tile.split('-')
         t = game_board.get_tile(coords[0], coords[1])
-        canvas.create_polygon(*t.vertices_to_list(), fill='black', outline='white')
+        canvas.create_polygon(*t.vertices_to_list(), fill=t.get_color(), outline='white')
 
     mainloop()
+
+
+def roll_dice():
+    return SystemRandom().randint(2, 12)
+
+
+def gather_resources(board, dice_roll):
+    for settlement in board.settlements:
+        for tile in settlement.vertex.tiles:
+            if tile.value == dice_roll:
+                settlement.player.resources[tile.resource] += 1
+
+
+def take_turn(player, board):
+    """
+    The idea for this function is that it will handle taking a single players turn.
+    1) Player MUST roll dice. This must occur before any other action on the turn
+    2a) Player may choose to trade
+    2b) Player may choose to build
+    2c) Player may choose to buy development cards
+    2d) Player may choose to play development cards
+    3) Player ends turn
+
+    NOTE: A player may choose to do any or all of the selections in step 2
+
+    :param player: Player Object for the current player taking the turn
+    :param board: Board Object representing the current state of the game board
+    :return:
+    """
+    dice_roll = roll_dice()
+    gather_resources(board, dice_roll)
+    # TODO: Finish this
 
 
 if __name__ == '__main__':

@@ -22,3 +22,8 @@ class Tile:
             v_list.append(v.coordinates[0])
             v_list.append(v.coordinates[1])
         return v_list
+
+    def get_color(self):
+        resource_colors = {'wood': 'forest green', 'wheat': 'gold', 'sheep': 'lawn green', 'stone': 'gray',
+                           'brick': 'sienna', 'desert': 'navajo white'}
+        return resource_colors[self.resource]
